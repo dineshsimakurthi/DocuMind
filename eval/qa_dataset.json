@@ -1,0 +1,14 @@
+[
+  {
+    "question": "What is the warranty period for the product?",
+    "reference_answer": "The product is covered by a one-year warranty from the date of purchase."
+  },
+  {
+    "question": "What does error code E-4021 mean?",
+    "reference_answer": "Error code E-4021 indicates the unit has overheated and needs to cool down before restarting."
+  },
+  {
+    "question": "How often should filters be cleaned?",
+    "reference_answer": "Filters should be cleaned monthly as part of routine maintenance."
+  }
+]

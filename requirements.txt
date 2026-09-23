@@ -1,0 +1,44 @@
+# Frontend
+streamlit>=1.38
+
+# LangChain — pinned to the 0.3.x line on purpose. LangChain shipped a v1.x
+# major release (langchain-core>=1.0) that restructured `langchain.retrievers`
+# (EnsembleRetriever's import path, among other things, changed) — installing
+# unpinned versions will break this project. Verified working together as of
+# this writing: langchain 0.3.27 / langchain-core 0.3.86 / langchain-community
+# 0.3.27 / langchain-qdrant 0.2.1 / langchain-groq 0.3.8.
+langchain==0.3.27
+langchain-core==0.3.86
+langchain-community==0.3.27       # PyPDFLoader, Docx2txtLoader, TextLoader, HuggingFaceBgeEmbeddings, BM25Retriever
+langchain-text-splitters==0.3.11  # RecursiveCharacterTextSplitter
+langchain-qdrant<1.0
+langchain-groq<1.0
+
+# Evaluation — RAGAS, pinned to 0.2.x specifically because ragas>=0.3 pulls
+# in a langchain-core>=1.0 requirement that conflicts with the 0.3.x pin
+# above (verified directly: installing unpinned ragas silently upgraded our
+# whole LangChain stack and broke EnsembleRetriever's import path). Verified
+# working together: ragas==0.2.15 / langchain-openai<1.0 (a hard dependency
+# of ragas's embeddings module even though we don't use OpenAI — it's only
+# imported, never actually called, since we pass our own LLM/embeddings in).
+ragas==0.2.15
+langchain-openai<1.0
+langchain-google-genai<3.0   # evaluator LLM (Gemini) — separate provider/quota from Groq
+
+# Loaders (lightweight — no layout/OCR models, unlike Docling)
+pypdf>=5.0
+docx2txt>=0.8
+
+# Embeddings — real sentence-transformers model (HuggingFace), CPU by default.
+# Pulls in PyTorch — noticeably heavier/slower to cold-start than the
+# fastembed/ONNX version of this project, traded deliberately for using an
+# actual sentence-transformers model as requested.
+sentence-transformers>=3.1
+
+# Lexical retrieval (BM25Retriever's backend)
+rank-bm25>=0.2.2
+
+# Vector store — embedded Qdrant, no server / no Docker
+qdrant-client>=1.11
+
+python-dotenv>=1.0
